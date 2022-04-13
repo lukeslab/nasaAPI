@@ -1,0 +1,6 @@
+1.) Ability to select a martian rover.
+2.) From the selected Martian rover, display that rovers details such as launch date, landing date, status, most recent photo date, and total photos.
+3.) Provide available cameras for that rover.
+4.) Ability to select from available cameras for the selected rover. Ability to select a time period for the images.
+5.) Display images from the selected camera and time period
+6.) Ability to change the rover and corresponding data above.

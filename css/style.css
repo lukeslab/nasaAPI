@@ -1,0 +1,36 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+img{
+  display: block;
+  margin: 0 auto;
+}
+
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
+
+body{
+  background: url("https://829395.smushcdn.com/1681952/wp-content/uploads/2018/08/dreamstime_xxl_18549657.jpg?lossy=0&strip=1&webp=1");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+table{
+  text-align: center;
+}
+
+tr{
+  border-left:1px solid black;
+}
