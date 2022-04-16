@@ -3,6 +3,7 @@ class Rover{
     this.apiKey = "mgmV5vUPYHEJzTCadeshpTHJaUWVhos8j8DDKAt0";
     this.roverName = ''
     this.roverCameras = ''
+    this.images = []
   }
 
   getRoverManifest(){
@@ -27,35 +28,41 @@ class Rover{
     this.displayAvailableRoverCameras();
   }
   setRoverCamers(){
-    this.roverCameras = this.roverName === "Curiosity" ? ['FHAZ','RHAZ','MAST','CHEMCAM','MAHLI','MARDI','NAVCAM']:['FHAZ','RHAZ','NAVCAM','PANCAM','MINITES']
+    this.roverCameras = {
+      "Perseverance" : {
+        // do this for the rest of them later.
+        "EDL_DDCAM" : "Descent Stage Down-Look Camera"
+      }
+       ["EDL_RUCAM","EDL_RDCAM","EDL_DDCAM","EDL_PUCAM1","EDL_PUCAM2","NAVCAM_LEFT","NAVCAM_RIGHT","MCZ_RIGHT","MCZ_LEFT","FRONT_HAZCAM_LEFT_A","FRONT_HAZCAM_RIGHT_A","REAR_HAZCAM_LEFT","REAR_HAZCAM_RIGHT","SKYCAM","SHERLOC_WATSON"],
+      "Curiosity":['FHAZ','RHAZ','MAST','CHEMCAM','MAHLI','MARDI','NAVCAM'],
+      "Spirit":['FHAZ','RHAZ','NAVCAM','PANCAM','MINITES'],
+      "Opportunity": ['FHAZ','RHAZ','NAVCAM','PANCAM','MINITES'],
+    }
   }
   displayAvailableRoverCameras(){
     const selectCamerasElement = document.querySelector('.selectAvailableCameras');
     selectCamerasElement.innerHTML = ' ';
-    for (const camera of this.roverCameras){
+    for (const camera of this.roverCameras[this.roverName]){
+      // set this to be more human readable.
       selectCamerasElement.innerHTML += `<option value="${camera}">${camera}</option>`
     }
   }
   getImages(){
-    console.log("Hello?")
     const selectedCamera = document.querySelector('.selectAvailableCameras').value
     const timePeriod = document.querySelector('input[type="date"]').value
 
-    const images = []
-    fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${this.roverName}/photos?earth_date=${timePeriod}&camera=${selectedCamera}&api_key=${this.apiKey}`)
+    fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${this.roverName}/photos?earth_date=${timePeriod}&camera=${selectedCamera}&api_key=${this.apiKey}&page=1`)
       .then(res => res.json())
-      .then( data => images = data.photos)
-      .catch(err => `Error: ${err}`)
-    console.log("Kittens?")
-    this.displayImages(images)
-    console.log("Does thos work?")
+      .then(data => {
+        this.images = data.photos;
+        this.displayImages(this.images)
+      })
+      .catch(err => `Error: ${err}`);
   }
   displayImages(images){
-    console.log(images)
     document.querySelector('.img-gallery').innerHTML = '';
 
-    for (image of images){
-      console.log("why?")
+    for (let image of images){
       document.querySelector('.img-gallery').innerHTML += `<img src="${image.img_src}">`;
     }
   }
